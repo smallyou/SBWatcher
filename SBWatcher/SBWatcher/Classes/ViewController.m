@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "SBWatcherHeader.h"
+#import <sqlite3.h>
 
 @interface ViewController ()
 
@@ -29,6 +30,38 @@
     NSString *content = @"lasjlfjaslkfjlkasjflkasjflksajfljsalfjaslfjlskjfklsdj";
     NSData *data = [content dataUsingEncoding:NSUTF8StringEncoding];
     BOOL result = [[NSFileManager defaultManager] createFileAtPath:[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject stringByAppendingPathComponent:@"haha.html"] contents:data attributes:nil];
+    
+    
+    
+    NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+    path = [path stringByAppendingPathComponent:@"myDemo"];
+    
+    const char *filename = [path UTF8String];
+    
+    sqlite3 *db = nil;
+    
+    if(sqlite3_open(filename, &db) == SQLITE_OK){
+        //成功打开数据库
+        NSLog(@"成功打开数据库");
+    }
+    
+    NSString *sql = @"create table if not exists t_student(id integer primary key autoincrement,student_id text unique,name text,age integer,time double)";
+    if(sqlite3_exec(db, [sql UTF8String], nil, nil, nil)){
+        //创建数据表成功
+        NSLog(@"创建数据库表成功");
+    }
+    
+    NSString *insertSql = @"insert into t_student values(NULL, 's_201007060224','chmn',24,123234343234234.99)";
+    if(sqlite3_exec(db, [insertSql UTF8String], nil, nil, nil)){
+        //插入语句成功
+        NSLog(@"插入语句成功");
+    }
+    
+    
+    
+    
+    
+    
     
     UIViewController *vc = [[UIViewController alloc] init];
     vc.title = @"other";

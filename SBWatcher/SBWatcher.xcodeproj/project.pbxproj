@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		F78733C91F23455900A3D802 /* SBSqliteManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F78733C81F23455900A3D802 /* SBSqliteManager.m */; };
 		F7CC7CAB1F25CFDB005E822F /* SBScanDBController.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CC7CAA1F25CFDB005E822F /* SBScanDBController.m */; };
+		F7CC7CAE1F25D375005E822F /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F7CC7CAD1F25D375005E822F /* libsqlite3.tbd */; };
+		F7CC7CB11F25D6ED005E822F /* SBTableItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CC7CB01F25D6ED005E822F /* SBTableItem.m */; };
+		F7CC7CB41F25D7C6005E822F /* SBClient.m in Sources */ = {isa = PBXBuildFile; fileRef = F7CC7CB31F25D7C6005E822F /* SBClient.m */; };
 		F7E56F871F2305FA005D439F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F7E56F861F2305FA005D439F /* main.m */; };
 		F7E56F901F2305FA005D439F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7E56F8E1F2305FA005D439F /* Main.storyboard */; };
 		F7E56F921F2305FA005D439F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7E56F911F2305FA005D439F /* Assets.xcassets */; };
@@ -28,6 +31,11 @@
 		F78733C81F23455900A3D802 /* SBSqliteManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBSqliteManager.m; sourceTree = "<group>"; };
 		F7CC7CA91F25CFDB005E822F /* SBScanDBController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBScanDBController.h; sourceTree = "<group>"; };
 		F7CC7CAA1F25CFDB005E822F /* SBScanDBController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBScanDBController.m; sourceTree = "<group>"; };
+		F7CC7CAD1F25D375005E822F /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		F7CC7CAF1F25D6ED005E822F /* SBTableItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTableItem.h; sourceTree = "<group>"; };
+		F7CC7CB01F25D6ED005E822F /* SBTableItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBTableItem.m; sourceTree = "<group>"; };
+		F7CC7CB21F25D7C6005E822F /* SBClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBClient.h; sourceTree = "<group>"; };
+		F7CC7CB31F25D7C6005E822F /* SBClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBClient.m; sourceTree = "<group>"; };
 		F7E56F821F2305FA005D439F /* SBWatcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SBWatcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7E56F861F2305FA005D439F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F7E56F8F1F2305FA005D439F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -57,17 +65,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7CC7CAE1F25D375005E822F /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F7CC7CAC1F25D374005E822F /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7CC7CAD1F25D375005E822F /* libsqlite3.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F7E56F791F2305FA005D439F = {
 			isa = PBXGroup;
 			children = (
 				F7E56F841F2305FA005D439F /* SBWatcher */,
 				F7E56F831F2305FA005D439F /* Products */,
+				F7CC7CAC1F25D374005E822F /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +155,10 @@
 				F7E56FA81F2307F5005D439F /* SBWatcherManager.m */,
 				F78733C71F23455900A3D802 /* SBSqliteManager.h */,
 				F78733C81F23455900A3D802 /* SBSqliteManager.m */,
+				F7CC7CB21F25D7C6005E822F /* SBClient.h */,
+				F7CC7CB31F25D7C6005E822F /* SBClient.m */,
+				F7CC7CAF1F25D6ED005E822F /* SBTableItem.h */,
+				F7CC7CB01F25D6ED005E822F /* SBTableItem.m */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -237,9 +259,11 @@
 				F7E56FA21F23068D005D439F /* AppDelegate.m in Sources */,
 				F7E56F871F2305FA005D439F /* main.m in Sources */,
 				F7E56FB81F2321F6005D439F /* SBFileItem.m in Sources */,
+				F7CC7CB41F25D7C6005E822F /* SBClient.m in Sources */,
 				F7CC7CAB1F25CFDB005E822F /* SBScanDBController.m in Sources */,
 				F7E56FB21F231CED005D439F /* SBMenuController.m in Sources */,
 				F7E56FB51F231DBA005D439F /* SBNavigationController.m in Sources */,
+				F7CC7CB11F25D6ED005E822F /* SBTableItem.m in Sources */,
 				F7E56FA31F23068D005D439F /* ViewController.m in Sources */,
 				F7E56FA91F2307F5005D439F /* SBWatcherManager.m in Sources */,
 			);
