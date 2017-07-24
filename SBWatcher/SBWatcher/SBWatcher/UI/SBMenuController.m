@@ -9,6 +9,7 @@
 #import "SBMenuController.h"
 #import "SBFileItem.h"
 #import "SBWatcherManager.h"
+#import "SBScanDBController.h"
 #import <QuickLook/QuickLook.h>
 
 @interface SBMenuController () <QLPreviewControllerDelegate,QLPreviewControllerDataSource>
@@ -87,6 +88,17 @@ static NSString * const ID = @"file";
         
         
     }else{
+        
+        
+        //如果是数据库文件，用专门的控制器查看
+        if (item.fileType == SBFileTypeDB) {
+            SBScanDBController *dbVc = [[SBScanDBController alloc] init];
+            dbVc.dbFullPath = item.fullPath;
+            dbVc.title = item.name;
+            [self.navigationController pushViewController:dbVc animated:YES];
+            return;
+        }
+        
         
         self.path = item.fullPath;
         QLPreviewController *myQlPreViewController = [[QLPreviewController alloc]init];
