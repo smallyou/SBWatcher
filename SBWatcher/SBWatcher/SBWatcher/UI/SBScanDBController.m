@@ -41,7 +41,6 @@ static NSString * const ID = @"cell";
     UITableView *tableView = [[UITableView alloc] init];
     tableView.dataSource = self;
     tableView.delegate = self;
-    [tableView registerClass:UITableViewCell.class forCellReuseIdentifier:ID];
     tableView.frame = self.view.bounds;
     [self.view addSubview:tableView];
     self.tableView = tableView;
@@ -57,9 +56,34 @@ static NSString * const ID = @"cell";
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:ID];;
+    }
     SBTableItem *item = self.datas[indexPath.row];
-    cell.textLabel.text = item.tableName;
+    cell.textLabel.text = [NSString stringWithFormat:@"type:%@; name:%@",item.displayType,item.name];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"数据表:%@",item.tbl_name];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    
+    //取出模型
+    SBTableItem *item = self.datas[indexPath.row];
+    
+    if (item.itemType != SBTableItemTypeTable) {
+        
+        [self alertBoxWithTitle:@"提示" Text:@"索引不可查看"];
+        
+        
+        
+        return;
+    }
+    
+    
+    
+    
 }
 
 #pragma mark - 数据处理
@@ -71,6 +95,16 @@ static NSString * const ID = @"cell";
     [self.tableView reloadData];
 }
 
+#pragma mark - 工具
+/**告警提示框*/
+- (void)alertBoxWithTitle:(NSString *)title Text:(NSString *)text
+{
+    UIAlertController *ac = [UIAlertController alertControllerWithTitle:title message:text preferredStyle:UIAlertControllerStyleAlert];
+    [ac addAction:[UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }]];
+    [self presentViewController:ac animated:YES completion:nil];
+}
 
 #pragma mark - 懒加载
 - (NSMutableArray *)datas

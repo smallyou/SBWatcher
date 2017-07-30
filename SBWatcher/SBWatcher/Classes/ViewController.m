@@ -34,7 +34,7 @@
     
     
     NSString *path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
-    path = [path stringByAppendingPathComponent:@"myDemo"];
+    path = [path stringByAppendingPathComponent:@"myDemo.db"];
     
     const char *filename = [path UTF8String];
     

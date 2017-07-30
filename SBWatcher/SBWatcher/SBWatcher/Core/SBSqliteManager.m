@@ -11,10 +11,15 @@
 #import "SBClient.h"
 #import "SBTableItem.h"
 
+
+
 @interface SBSqliteManager ()
 
 /**当前的数据库路径*/
 @property(nonatomic,copy) NSString *currentDBPath;
+
+/**当前的结果--结果集*/
+@property(nonatomic,strong) NSMutableArray *results;
 
 @end
 
@@ -35,84 +40,37 @@ static id _instance;
 /**获取指定路径数据库的数据表*/
 - (NSArray *)tablesInDatabaseAtPath:(NSString *)path
 {
-    NSMutableArray *arrayM = [NSMutableArray array];
     
-    //将当前的数据库文件赋值到tmp文件夹下
-    self.currentDBPath = [self sb_copyDatabaseAtPath:path];
+    //赋值
+    self.currentDBPath = path;
     
     //打开数据库
     sqlite3 *db = [self openDatabaseAtPath:self.currentDBPath];
     if (db == nil) {
-        return arrayM;
+        return nil;
     }
     
     //查询sqlite_master表
-    NSString *sql = @"select * from t_student";
-    
-    //常见预处理语句
-    sqlite3_stmt *stmt;
-    if(sqlite3_prepare_v2(db, [sql UTF8String], -1, &stmt, nil) != SQLITE_OK){
-        //print("预处理失败")
-        return arrayM;
-    }
-    
-    // 绑定 - 如果没有需要绑定的参数，可以省略
-    // 执行预处理语句 -- 每执行一次就是一行数据，每行记录（结果集）都放在stmt中
-    while (sqlite3_step(stmt) == SQLITE_ROW) {
-        
-        //创建模型
-        SBTableItem *item = [[SBTableItem alloc] init];
-        
-        // 获取当前行有多少列(字段)
-        int columnCount = sqlite3_column_count(stmt);
-        
-        // 循环取出字段
-        for (int i = 0; i < columnCount; i++) {
-            
-            
-            // 获取当前字段的字段名称(当前索引，第几个字段)
-            const char * columnName = sqlite3_column_name(stmt, i);
-            NSString *columnNameStr = [NSString stringWithCString:columnName encoding:NSUTF8StringEncoding];
-            
-            // 获取当前字段的类型
-            int type = sqlite3_column_type(stmt, i);
-            // 根据类型取出对应类型的值
-            if (type == SQLITE_TEXT) { //如果是文本类型
-                
-                const unsigned char * value = sqlite3_column_text(stmt, i);
-                NSString *valueStr = [NSString stringWithCString:value encoding:NSUTF8StringEncoding];
-                
-                [item setValue:valueStr forKeyPath:columnNameStr];
+    NSString *sql = @"select type, name, tbl_name from sqlite_master";
 
-            }else if (type == SQLITE_INTEGER){ //如果是整型
-                int value = sqlite3_column_int(stmt, i);
-                
-                
-            }else if (type == SQLITE_FLOAT) { //如果是浮点型
-                double value = sqlite3_column_double(stmt, i);
-                
-                
-            }
-            
-        }
-        
-        [arrayM addObject:item];
-    }
+    //执行sql语句
+    char *errmsg = nil;
+    sqlite3_exec(db, [sql UTF8String], sqliteMasterCallback, nil, &errmsg);
+    
+    
+    NSMutableArray *arrayM = [NSMutableArray arrayWithArray:self.results];
+    
+    [self.results removeAllObjects];
     
     
     return arrayM;
 }
 
-int callback(void *firstValue,int columnCount, char **columnValues, char **columnNames)
-{
-    NSLog(@"");
-    
-    return 0;
-}
 
 
 
 #pragma mark - 数据库操作工具方法
+/**打开数据库*/
 - (sqlite3 *)openDatabaseAtPath:(NSString *)path
 {
     //打开数据库
@@ -142,5 +100,65 @@ int callback(void *firstValue,int columnCount, char **columnValues, char **colum
     return destPath;
 }
 
+/**查询sqlite_master表的操作回调*/
+int sqliteMasterCallback(void *firstValue,int columnCount, char **columnValues, char **columnNames)
+{
+    
+    SBTableItem *tableItem = [[SBTableItem alloc] init];
+    
+    //便利当前行的所有字段(列)
+    for (int i = 0; i < columnCount; i++) {
+        
+        //获取当前的列表（字段名）
+        char *columnName = columnNames[i];
+        NSString *nameStr = [NSString stringWithUTF8String:columnName];
+        
+        //获取当前字段的值
+        char *columnValue = columnValues[i];
+        NSString *valueStr = [NSString stringWithUTF8String:columnValue];
+        
+        //type
+        if ([nameStr isEqualToString:@"type"]) {
+            tableItem.type =valueStr;
+            if ([valueStr isEqualToString:@"table"]) {
+                //数据表
+                tableItem.itemType = SBTableItemTypeTable;
+                tableItem.displayType = @"数据表";
+            }
+            if ([valueStr isEqualToString:@"index"]) {
+                //索引
+                tableItem.itemType = SBTableItemTypeIndex;
+                tableItem.displayType = @"索引";
+            }
+        }
+        
+        //name
+        if ([nameStr isEqualToString:@"name"]) {
+            tableItem.name =valueStr;
+        }
+        
+        //tbl_name
+        if ([nameStr isEqualToString:@"tbl_name"]) {
+            tableItem.tbl_name = valueStr;
+        }
+    }
+
+    
+    //添加结果
+    [[(SBSqliteManager *)_instance results] addObject:tableItem];
+
+    return 0;
+}
+
+
+
+#pragma mark - 懒加载
+- (NSMutableArray *)results
+{
+    if (_results == nil) {
+        _results = [NSMutableArray array];
+    }
+    return _results;
+}
 
 @end
