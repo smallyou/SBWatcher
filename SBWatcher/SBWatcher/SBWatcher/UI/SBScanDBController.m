@@ -9,6 +9,7 @@
 #import "SBScanDBController.h"
 #import "SBSqliteManager.h"
 #import "SBTableItem.h"
+#import "SBScanTableController.h"
 
 @interface SBScanDBController () <UITableViewDelegate,UITableViewDataSource>
 
@@ -73,16 +74,13 @@ static NSString * const ID = @"cell";
     SBTableItem *item = self.datas[indexPath.row];
     
     if (item.itemType != SBTableItemTypeTable) {
-        
         [self alertBoxWithTitle:@"提示" Text:@"索引不可查看"];
-        
-        
-        
         return;
     }
     
-    
-    
+    SBScanTableController *vc = [[SBScanTableController alloc] init];
+    vc.tableItem = item;
+    [self.navigationController pushViewController:vc animated:YES];
     
 }
 

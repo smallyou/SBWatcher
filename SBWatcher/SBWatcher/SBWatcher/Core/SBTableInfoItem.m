@@ -1,0 +1,13 @@
+//
+//  SBTableInfoItem.m
+//  SBWatcher
+//
+//  Created by 23 on 2017/7/30.
+//  Copyright © 2017年 smallyou. All rights reserved.
+//
+
+#import "SBTableInfoItem.h"
+
+@implementation SBTableInfoItem
+
+@end
