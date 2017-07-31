@@ -139,7 +139,8 @@ static NSString * const ID = @"info";
     }
     
     //遍历
-    NSString *key = [self.selectedKeys.firstObject name];
+    SBTableInfoItem *first = self.selectedKeys.firstObject;
+    NSString *key = [first name];
     for (int i = 1; i < self.selectedKeys.count; i++) {
         SBTableInfoItem *item = self.selectedKeys[i];
         key = [NSString stringWithFormat:@"%@,%@",key,item.name];
