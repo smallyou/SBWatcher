@@ -13,4 +13,7 @@
 /**sql语句*/
 @property(nonatomic,copy) NSString *sql;
 
+/**当前的数据*/
+@property(nonatomic,strong) NSArray *datas;
+
 @end

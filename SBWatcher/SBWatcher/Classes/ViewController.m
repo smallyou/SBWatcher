@@ -57,6 +57,33 @@
         NSLog(@"插入语句成功");
     }
     
+    NSString *insertSql1 = @"insert into t_student values(NULL, 's_201007060223','chmn',24,123234343234234.99)";
+    if(sqlite3_exec(db, [insertSql1 UTF8String], nil, nil, nil)){
+        //插入语句成功
+        NSLog(@"插入语句成功");
+    }
+    
+    NSString *insertSql2 = @"insert into t_student values(NULL, 's_201007060222','chmn',24,123234343234234.99)";
+    if(sqlite3_exec(db, [insertSql2 UTF8String], nil, nil, nil)){
+        //插入语句成功
+        NSLog(@"插入语句成功");
+    }
+    
+    NSString *insertSql3 = @"insert into t_student values(NULL, 's_201007060221','chmn',24,123234343234234.99)";
+    if(sqlite3_exec(db, [insertSql3 UTF8String], nil, nil, nil)){
+        //插入语句成功
+        NSLog(@"插入语句成功");
+    }
+    
+    NSString *insertSql4 = @"insert into t_student values(NULL, 's_201007060220','chmn',24,123234343234234.99)";
+    if(sqlite3_exec(db, [insertSql4 UTF8String], nil, nil, nil)){
+        //插入语句成功
+        NSLog(@"插入语句成功");
+    }
+    
+    
+    
+    
     
     
     

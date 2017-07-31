@@ -133,6 +133,7 @@ static NSString * const ID = @"info";
     if (self.selectedKeys.count == 0) {
         sql = [NSString stringWithFormat:@"select * from %@",self.tableItem.tbl_name];
         vc.sql = sql;
+        vc.datas = [[SBSqliteManager shareManager] rowsWithSelectSql:sql];
         [self.navigationController pushViewController:vc animated:YES];
         return;
     }
@@ -145,8 +146,9 @@ static NSString * const ID = @"info";
     }
     
     sql = [NSString stringWithFormat:@"select %@ from %@",key,self.tableItem.tbl_name];
-    
     vc.sql = sql;
+    vc.datas = [[SBSqliteManager shareManager] rowsWithSelectSql:sql];
+    
     [self.navigationController pushViewController:vc animated:YES];
 
 }
