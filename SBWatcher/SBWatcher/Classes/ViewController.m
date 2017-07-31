@@ -83,13 +83,6 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    
     UIViewController *vc = [[UIViewController alloc] init];
     vc.title = @"other";
     vc.view.backgroundColor = [UIColor whiteColor];
