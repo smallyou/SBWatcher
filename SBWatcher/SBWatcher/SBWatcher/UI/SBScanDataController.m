@@ -22,7 +22,7 @@
 /**headerView*/
 @property(nonatomic,weak) SBScanDataHeaderView *headerView;
 /**displayView*/
-@property(nonatomic,weak) SBDataDisplayView *displayView;
+@property(nonatomic,weak) UIView *coverView;
 
 @end
 
@@ -139,17 +139,24 @@ static NSString * const ID = @"rows";
 /**显示displayView*/
 - (void)showDisplayView:(NSString *)title
 {
-    if (self.displayView) {
-        [self.displayView removeFromSuperview];
+    if (self.coverView) {
+        [self.coverView removeFromSuperview];
     }
+    
+    UIView *coverView = [[UIView alloc] init];
+    [coverView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDisplayView)]];
+    coverView.frame = [UIApplication sharedApplication].keyWindow.bounds;
+    [[UIApplication sharedApplication].keyWindow addSubview:coverView];
+    self.coverView = coverView;
     
     SBDataDisplayView *displayView = [[SBDataDisplayView alloc] initWithTitle:title];
     displayView.backgroundColor = [UIColor lightGrayColor];
-    [[UIApplication sharedApplication].keyWindow addSubview:displayView];
+    [coverView addSubview:displayView];
     [displayView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDisplayView)]];
-    self.displayView = displayView;
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    
+    
     displayView.frame = CGRectMake(0.5 * (width - 150), 0.5 * (height - 100), 150, 100);
     displayView.label.hidden = YES;
     [UIView animateWithDuration:0.25 animations:^{
@@ -161,8 +168,8 @@ static NSString * const ID = @"rows";
 
 - (void)dismissDisplayView
 {
-    if (self.displayView) {
-        [self.displayView removeFromSuperview];
+    if (self.coverView) {
+        [self.coverView removeFromSuperview];
     }
 }
 
