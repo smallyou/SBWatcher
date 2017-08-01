@@ -32,9 +32,9 @@
     return self;
 }
 
-- (void)layoutIfNeeded
+- (void)layoutSubviews
 {
-    [super layoutIfNeeded];
+    [super layoutSubviews];
     self.titleView.frame = self.contentView.bounds;
 }
 
