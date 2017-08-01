@@ -19,7 +19,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        [self.contentView setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
+        [self setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
     }
     return self;
 }
@@ -29,7 +29,7 @@
     _titles = titles;
     
     //移除
-    for (UIView *sub in self.contentView.subviews) {
+    for (UIView *sub in self.subviews) {
         [sub removeFromSuperview];
     }
     
@@ -50,7 +50,7 @@
         label.tag = i;
         label.userInteractionEnabled = YES;
         [label addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLabel:)]];
-        [self.contentView addSubview:label];
+        [self addSubview:label];
     }
     
 }
@@ -59,11 +59,11 @@
 {
     [super layoutSubviews];
     
-    for (UIView *subView in self.contentView.subviews) {
+    for (UIView *subView in self.subviews) {
         if ([subView isKindOfClass:UILabel.class]) {
             
             CGFloat width = (1.0 * self.bounds.size.width - (self.titles.count - 1) ) / self.titles.count;
-            subView.frame = CGRectMake(subView.tag * (width + 1), 0, width, self.contentView.bounds.size.height);
+            subView.frame = CGRectMake(subView.tag * (width + 1), 0, width, self.bounds.size.height);
         
         }
     }

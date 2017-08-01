@@ -56,7 +56,7 @@ static NSString * const ID = @"rows";
     tableView.backgroundColor = [UIColor whiteColor];
     tableView.delegate = self;
     tableView.dataSource = self;
-    tableView.bounces = NO;
+//    tableView.bounces = NO;
     [self.scrollView addSubview:tableView];
     self.tableView = tableView;
     
@@ -69,8 +69,8 @@ static NSString * const ID = @"rows";
     if (self.datas.count) {
         NSDictionary *dict = self.datas.firstObject;
         NSUInteger num = [dict allKeys].count;
-        self.tableView.frame = CGRectMake(0, 0, num * 200, self.scrollView.frame.size.height);
-        self.scrollView.contentSize = CGSizeMake(self.tableView.frame.size.width, self.scrollView.bounds.size.height);
+        self.tableView.frame = CGRectMake(0, 0, num * 200, self.scrollView.frame.size.height - 64);
+        self.scrollView.contentSize = CGSizeMake(self.tableView.frame.size.width, self.tableView.bounds.size.height);
     }
     
     
@@ -85,7 +85,7 @@ static NSString * const ID = @"rows";
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    SBScanDataHeaderView *headerView = [tableView dequeueReusableHeaderFooterViewWithIdentifier:@"header"];
+    SBScanDataHeaderView *headerView = nil;
     if (headerView == nil) {
         headerView = [[SBScanDataHeaderView alloc] init];
     }

@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, SBScanDataHeaderViewType) {
 @end
 
 
-@interface SBScanDataHeaderView : UITableViewHeaderFooterView
+@interface SBScanDataHeaderView : UIView
 
 /**字符串数组*/
 @property(nonatomic,copy) NSArray *titles;
