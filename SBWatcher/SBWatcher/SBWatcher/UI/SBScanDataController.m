@@ -10,8 +10,9 @@
 #import "SBSqliteManager.h"
 #import "SBScanDataHeaderView.h"
 #import "SBScanDataCell.h"
+#import "SBDataDisplayView.h"
 
-@interface SBScanDataController () <UITableViewDelegate,UITableViewDataSource>
+@interface SBScanDataController () <UITableViewDelegate,UITableViewDataSource,SBScanDataHeaderViewDelegate>
 
 
 /**UIScrollView*/
@@ -20,6 +21,8 @@
 @property(nonatomic,weak) UITableView *tableView;
 /**headerView*/
 @property(nonatomic,weak) SBScanDataHeaderView *headerView;
+/**displayView*/
+@property(nonatomic,weak) SBDataDisplayView *displayView;
 
 @end
 
@@ -93,6 +96,11 @@ static NSString * const ID = @"rows";
     return headerView;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 44;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.datas.count;
@@ -103,6 +111,8 @@ static NSString * const ID = @"rows";
     SBScanDataCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
     if (cell == nil) {
         cell = [[SBScanDataCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:ID];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.titleView.delegate = self;
     }
     
     cell.titleView.type = (indexPath.row % 2 == 0)?SBScanDataHeaderViewTypeRowsOne:SBScanDataHeaderViewTypeRowsTwo;
@@ -115,10 +125,47 @@ static NSString * const ID = @"rows";
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+#pragma mark - SBScanDataHeaderViewDelegate
+/**点击具体的值，显示*/
+- (void)headerView:(SBScanDataHeaderView *)headerView didLabelTaped:(UILabel *)label
 {
-    return 44;
+    //取出当前点击的label的文字
+    NSString *title = label.text;
+    
+    //显示
+    [self showDisplayView:title];
 }
+
+/**显示displayView*/
+- (void)showDisplayView:(NSString *)title
+{
+    if (self.displayView) {
+        [self.displayView removeFromSuperview];
+    }
+    
+    SBDataDisplayView *displayView = [[SBDataDisplayView alloc] initWithTitle:title];
+    displayView.backgroundColor = [UIColor lightGrayColor];
+    [[UIApplication sharedApplication].keyWindow addSubview:displayView];
+    [displayView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(dismissDisplayView)]];
+    self.displayView = displayView;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    CGFloat height = [UIScreen mainScreen].bounds.size.height;
+    displayView.frame = CGRectMake(0.5 * (width - 150), 0.5 * (height - 100), 150, 100);
+    displayView.label.hidden = YES;
+    [UIView animateWithDuration:0.25 animations:^{
+        displayView.frame = CGRectMake(0.5 * (width - 300), 0.5 * (height - 200), 300, 200);
+    }completion:^(BOOL finished) {
+        displayView.label.hidden = NO;
+    }];
+}
+
+- (void)dismissDisplayView
+{
+    if (self.displayView) {
+        [self.displayView removeFromSuperview];
+    }
+}
+
 
 
 

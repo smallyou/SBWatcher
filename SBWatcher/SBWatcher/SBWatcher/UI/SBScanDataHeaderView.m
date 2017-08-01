@@ -19,7 +19,7 @@
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.contentView.backgroundColor = [UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0];
+        [self.contentView setBackgroundColor:[UIColor colorWithRed:238/255.0 green:238/255.0 blue:238/255.0 alpha:1.0]];
     }
     return self;
 }
@@ -48,6 +48,8 @@
         label.text = title;
         label.textAlignment = NSTextAlignmentCenter;
         label.tag = i;
+        label.userInteractionEnabled = YES;
+        [label addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapLabel:)]];
         [self.contentView addSubview:label];
     }
     
@@ -65,6 +67,17 @@
         
         }
     }
+}
+
+#pragma mark - 事件监听
+- (void)tapLabel:(UITapGestureRecognizer *)tap
+{
+    //获取label
+    UILabel *label = (UILabel *)tap.view;
+    if ([self.delegate respondsToSelector:@selector(headerView:didLabelTaped:)]) {
+        [self.delegate headerView:self didLabelTaped:label];
+    }
+    
 }
 
 

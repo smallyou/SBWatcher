@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F70B03F91F30584E00058B6A /* SBDataDisplayView.m in Sources */ = {isa = PBXBuildFile; fileRef = F70B03F81F30584E00058B6A /* SBDataDisplayView.m */; };
 		F71F8DCA1F2DCB39000B5878 /* SBScanTableController.m in Sources */ = {isa = PBXBuildFile; fileRef = F71F8DC91F2DCB39000B5878 /* SBScanTableController.m */; };
 		F71F8DCD1F2DD126000B5878 /* SBTableInfoItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F71F8DCC1F2DD126000B5878 /* SBTableInfoItem.m */; };
 		F71F8DD51F2DDF66000B5878 /* SBScanDataController.m in Sources */ = {isa = PBXBuildFile; fileRef = F71F8DD41F2DDF66000B5878 /* SBScanDataController.m */; };
@@ -32,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F70B03F71F30584E00058B6A /* SBDataDisplayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBDataDisplayView.h; sourceTree = "<group>"; };
+		F70B03F81F30584E00058B6A /* SBDataDisplayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBDataDisplayView.m; sourceTree = "<group>"; };
 		F71F8DC81F2DCB39000B5878 /* SBScanTableController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBScanTableController.h; sourceTree = "<group>"; };
 		F71F8DC91F2DCB39000B5878 /* SBScanTableController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBScanTableController.m; sourceTree = "<group>"; };
 		F71F8DCB1F2DD126000B5878 /* SBTableInfoItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBTableInfoItem.h; sourceTree = "<group>"; };
@@ -199,6 +202,8 @@
 				F72EC6401F2F2DC200B41D23 /* SBScanDataHeaderView.m */,
 				F72EC6421F2F7B9A00B41D23 /* SBScanDataCell.h */,
 				F72EC6431F2F7B9A00B41D23 /* SBScanDataCell.m */,
+				F70B03F71F30584E00058B6A /* SBDataDisplayView.h */,
+				F70B03F81F30584E00058B6A /* SBDataDisplayView.m */,
 				F7E56FB61F2321F6005D439F /* SBFileItem.h */,
 				F7E56FB71F2321F6005D439F /* SBFileItem.m */,
 				F7E56FAE1F231888005D439F /* resource.bundle */,
@@ -281,6 +286,7 @@
 			files = (
 				F78733C91F23455900A3D802 /* SBSqliteManager.m in Sources */,
 				F7E56FAC1F2308A1005D439F /* SBStartView.m in Sources */,
+				F70B03F91F30584E00058B6A /* SBDataDisplayView.m in Sources */,
 				F7E56FA21F23068D005D439F /* AppDelegate.m in Sources */,
 				F7E56F871F2305FA005D439F /* main.m in Sources */,
 				F7E56FB81F2321F6005D439F /* SBFileItem.m in Sources */,

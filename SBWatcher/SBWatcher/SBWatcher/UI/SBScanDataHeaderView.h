@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+@class SBScanDataHeaderView;
 
 typedef NS_ENUM(NSInteger, SBScanDataHeaderViewType) {
     SBScanDataHeaderViewTypeTitle  = 0,
@@ -15,6 +16,13 @@ typedef NS_ENUM(NSInteger, SBScanDataHeaderViewType) {
     
 };
 
+@protocol SBScanDataHeaderViewDelegate <NSObject>
+
+- (void)headerView:(SBScanDataHeaderView *)headerView didLabelTaped:(UILabel *)label;
+
+@end
+
+
 @interface SBScanDataHeaderView : UITableViewHeaderFooterView
 
 /**字符串数组*/
@@ -22,5 +30,8 @@ typedef NS_ENUM(NSInteger, SBScanDataHeaderViewType) {
 
 /**类型*/
 @property(nonatomic,assign) SBScanDataHeaderViewType type;
+
+/**delegate*/
+@property(nonatomic,weak) id<SBScanDataHeaderViewDelegate> delegate;
 
 @end
