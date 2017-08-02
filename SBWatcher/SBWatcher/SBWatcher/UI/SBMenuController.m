@@ -90,6 +90,7 @@ static NSString * const ID = @"file";
     }else{
         
         
+        
         //如果是数据库文件，用专门的控制器查看
         if (item.fileType == SBFileTypeDB) {
             SBScanDBController *dbVc = [[SBScanDBController alloc] init];
